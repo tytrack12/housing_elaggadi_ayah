@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: alexpereira
+      MYSQL_DATABASE: housingg
+    ports:
+      - "3306:3306"
+
+  api:
+    build: .
+    container_name: housing_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "mysql+pymysql://root:alexpereira@db/housingg"
